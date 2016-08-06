@@ -1,0 +1,16 @@
+0 - grass
+1 - rock
+2 - stone
+3 - wood
+4 - water
+5 - watertop
+6 - waterbottom
+7 - waterleft
+8 - waterright
+9 - watertopleft
+10 - watertopright
+11 - waterbotleft
+12 - waterbotright
+13 - waterstatic
+
+20 - spawn

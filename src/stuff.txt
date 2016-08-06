@@ -1,0 +1,10 @@
+public void renderSprite(Sprite sprite, int x, int y){
+		for(int yi = 0; yi < sprite.SIZE; yi++){
+			for(int xi = 0; xi < sprite.SIZE; xi++){
+				int colour = sprite.pixels[(xi & 15) + yi * sprite.SIZE];
+				if(colour != 0xffff00ff){
+					pixels[(x + xi) + (y + yi) * width] = colour;
+				}
+			}
+		}
+	}
