@@ -1,7 +1,9 @@
 package graphics;
 
+import entities.lighting.Light;
 import graphics.sprites.Sprite;
 import graphics.tiles.Tile;
+import math.Tinting;
 
 public class Render {
 	//private int Width;
@@ -70,6 +72,28 @@ public class Render {
 		screen.pixels[xp + (yp-1) * screen.Width] = colour;
 		screen.pixels[(xp-1) + yp * screen.Width] = colour;
 		screen.pixels[(xp-1) + (yp-1) * screen.Width] = colour;
+	}
+	
+	public void renderLight(Light light){
+		int xx = light.getX() - xOffset;
+		int yy = light.getY() - yOffset;
+		int intensity = light.intensity;
+		if(xx > 0 && yy > 0 && xx < screen.Width && yy < screen.Height){
+			double x = 0;
+			double y = 0;
+			for(int dist = 0; dist < light.radius; dist++){
+				for(int currad = 0; currad < 360; currad++ ){
+					x = Math.sin(Math.toRadians(currad)) * dist + xx;
+					y = Math.cos(Math.toRadians(currad)) * dist + yy;
+					if(y < 0 || y >= screen.Height || x < 0 || x >= screen.Width) {
+					}else{
+						int incol = screen.pixels[(int)x + (int)y * screen.Width];
+						screen.pixels[(int)x + (int)y * screen.Width] = Tinting.changeBrightness(incol, intensity);
+					}
+				}
+				intensity--;
+			}
+		}
 	}
 	
 	public void setOffsets(int x, int y){

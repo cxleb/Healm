@@ -7,14 +7,11 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 
-import entities.Player;
-import entities.lighting.Light;
-import entities.lighting.LightMap;
-import entities.particle.ParticleSpawner;
 import graphics.Render;
 import graphics.Window;
-import graphics.map.Map;
 import input.Keyboard;
+import input.Mouse;
+import level.Level;
 
 
 public class Game extends Canvas implements Runnable{
@@ -32,12 +29,9 @@ public class Game extends Canvas implements Runnable{
 	Render render;
 	
 	Keyboard keyboard;
+	Mouse mouse;
 	
-	Map mapTest;
-	
-	Player player;
-	ParticleSpawner spawner;
-	LightMap map;
+	Level currentLevel;
 	
 	BufferedImage image = new BufferedImage(Width, Height, BufferedImage.TYPE_INT_RGB);
 	private int[] pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
@@ -48,24 +42,14 @@ public class Game extends Canvas implements Runnable{
 		window = new Window(Width * scale, Height * scale, "This is the Title", this);
 		render = new Render(Width, Height);
 		
-		mapTest = new Map("res/maps/blank.csv");
-		
-		player = new Player(mapTest.getSpawnX() - (Width/2-8), mapTest.getSpawnY() - (Height/2-8));
-		
-		spawner = new ParticleSpawner(mapTest.getSpawnX()+16, mapTest.getSpawnY(), 10);
-		
-		map = new LightMap();
-		
-		map.addLight(new Light(150, 100, 50, 50));
-		map.addLight(new Light(200, 100, 50, 50));
-		map.addLight(new Light(250, 100, 50, 50));
-		map.addLight(new Light(300, 100, 50, 50));
-		
+		currentLevel = new Level("res/maps/spawn.csv");
 		
 		keyboard = new Keyboard();
+		mouse = new Mouse();
 		this.requestFocus();
 		this.addKeyListener(keyboard);
-		
+		this.addMouseListener(mouse);
+		this.addMouseMotionListener(mouse);
 	}
 	
 	public synchronized void start(){
@@ -91,17 +75,10 @@ public class Game extends Canvas implements Runnable{
 		
 		render.clear();
 		
-		mapTest.render(render);
-		
-		spawner.render(DeltaTime, render);
-		
-		player.render(DeltaTime, render);
-		
-		map.renderLightMap(render.screen, render.xOffset, render.yOffset, Width, Height);
-		
+		currentLevel.render(render, DeltaTime);
 		
 		for(int i = 0; i < pixels.length; i++){
-			pixels[i] = map.output.pixels[i];
+			pixels[i] = render.screen.pixels[i];
 		}
 		
 		Graphics g = bs.getDrawGraphics();
@@ -118,11 +95,9 @@ public class Game extends Canvas implements Runnable{
 		bs.show();
 	}
 	private void update(){
-		player.update(DeltaTime, mapTest);
+		currentLevel.update(DeltaTime);
 		
-		spawner.update(DeltaTime, mapTest);
-		
-		render.setOffsets(player.playerX, player.playerY);
+		render.setOffsets(currentLevel.player.playerX, currentLevel.player.playerY);
 		
 	}
 	

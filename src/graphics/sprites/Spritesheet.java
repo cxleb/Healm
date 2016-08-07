@@ -12,6 +12,7 @@ public class Spritesheet {
 	public int[] pixels;
 	
 	public static Spritesheet mainSpriteSheet = new Spritesheet("/spritesheets/spritesheet for healm.png", 256);
+	public static Spritesheet bulletSpriteSheet = new Spritesheet("/spritesheets/bullet.png", 8);
 	
 	
 	

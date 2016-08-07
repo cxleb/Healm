@@ -35,7 +35,7 @@ public class Sprite {
 	
 	public static Sprite spawner_1 = new Sprite(Spritesheet.mainSpriteSheet, 16, 2, 1);
 	
-	
+	public static Sprite bullet_1 = new Sprite(Spritesheet.bulletSpriteSheet, 8, 0, 0);
 	
 	public Sprite(Spritesheet sheet, int size, int x, int y){
 		SIZE = size;

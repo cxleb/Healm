@@ -6,8 +6,6 @@ public class Tinting {
 		int r = (colour & 0xff0000) >> 16;
 		int g = (colour & 0xff00) >> 8;
 		int b = colour & 0xff;
-		if(amount < 0)
-			amount = 0;
 		r += amount;
 		g += amount;
 		b += amount;

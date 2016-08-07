@@ -3,11 +3,14 @@ package entities;
 import java.util.ArrayList;
 import java.util.List;
 
+import entities.bullets.BulletRender;
 import entities.components.AnimationComponent;
 import game.Game;
+import graphics.Render;
 import graphics.map.Map;
 import graphics.sprites.Sprite;
 import input.Keyboard;
+import input.Mouse;
 
 public class Player extends Entity{
 
@@ -26,6 +29,11 @@ public class Player extends Entity{
 	private AnimationComponent rightAnim;
 	List<Sprite> leftSprites;
 	List<Sprite> rightSprites;
+	
+	BulletRender bullets;
+	
+	int timer = 0;
+	int fireRate = 10;
 	
 	
 	public Player(int x, int y) {
@@ -52,9 +60,13 @@ public class Player extends Entity{
 		
 		addComponent(rightAnim);
 		addComponent(leftAnim);
+		
+		bullets = new BulletRender(playerX+(Game.Width/2-8),playerY+(Game.Height/2-8), 2);
 	}
 	
 	public void entityUpdate(int delta, Map map){
+		
+		// moving and animation
 		if(map.getTileAt( (playerX + (Game.Width/2)) / 16 , (playerY + (Game.Height/2 - 8 )) / 16).isSolid){
 			canMoveUp = false;
 		} else {
@@ -121,6 +133,28 @@ public class Player extends Entity{
 		} else {
 			animate = false;
 		}
+		
+		
+		// shooting
+		if(Mouse.clicked && timer <= 0){
+			double bx = Mouse.x - Game.Width/2;
+			double by = Mouse.y - Game.Height/2;
+			double dir = Math.atan2(by, bx);
+			by = Math.sin(dir)*1;
+			bx = Math.cos(dir)*1;
+			bullets.addBullet(playerX+(Game.Width/2-8), playerY+(Game.Height/2-8), bx, by);
+			timer = fireRate;
+		}
+		if(timer > 0)
+			timer--;
+		
+		bullets.setX(playerX+(Game.Width/2-8));
+		bullets.setY(playerY+(Game.Height/2-8));
+		bullets.update(delta, map);
+	}
+	
+	public void entityRender(int delta, Render render){
+		bullets.render(delta, render);
 	}
 
 }
