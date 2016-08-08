@@ -24,9 +24,9 @@ public class ParticleSpawner extends Entity{
 		}
 	}
 	
-	public void addParticles(int amount){
+	public void addParticles(int amount, int life){
 		for(int i = 0; i < amount; i++){
-			particles.add(new Particle(7+x, 7+y, random.nextGaussian(), random.nextGaussian(), 100));
+			particles.add(new Particle(7+x, 7+y, random.nextGaussian(), random.nextGaussian(), life));
 		}
 	}
 	

@@ -68,10 +68,10 @@ public class Render {
 		if(yp-1 < 0 || yp-1 >= screen.Height || xp-1 < 0 || xp-1 >= screen.Width) return;
 		if(yp < 0 || yp >= screen.Height || xp-1 < 0 || xp-1 >= screen.Width) return;
 		if(yp-1 < 0 || yp-1 >= screen.Height || xp < 0 || xp >= screen.Width) return;
-		screen.pixels[xp + yp * screen.Width] = colour;
-		screen.pixels[xp + (yp-1) * screen.Width] = colour;
-		screen.pixels[(xp-1) + yp * screen.Width] = colour;
-		screen.pixels[(xp-1) + (yp-1) * screen.Width] = colour;
+		screen.pixels[xp + yp * screen.Width] = Tinting.changeBrightness(screen.pixels[xp + yp * screen.Width], colour);
+		screen.pixels[xp + (yp-1) * screen.Width] = Tinting.changeBrightness(screen.pixels[xp + (yp-1) * screen.Width], colour);
+		screen.pixels[(xp-1) + yp * screen.Width] = Tinting.changeBrightness(screen.pixels[(xp-1) + yp * screen.Width], colour);
+		screen.pixels[(xp-1) + (yp-1) * screen.Width] = Tinting.changeBrightness(screen.pixels[(xp-1) + (yp-1) * screen.Width], colour);
 	}
 	
 	public void renderLight(Light light){

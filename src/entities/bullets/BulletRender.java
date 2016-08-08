@@ -42,7 +42,7 @@ public class BulletRender extends Entity{
 			if(bullets.get(i).isDead){
 				spawner.setX((int)bullets.get(i).dX);
 				spawner.setY((int)bullets.get(i).dY);
-				spawner.addParticles(50);
+				spawner.addParticles(20, 20);
 				bullets.remove(i);
 			}
 		}

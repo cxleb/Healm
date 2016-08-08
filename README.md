@@ -11,8 +11,7 @@ but for now this is what i have :)
 ## Healm
 A small game built in java from scratch
 
-the change the map to the real spawn:
 
-1, goto the Game.java file
-2, locate the line of code "mapTest = new Map("res/maps/blank.csv");"
-3, change "blank" to "spawn" 
+## Contributions
+If you find that your really must add something to such a small game then contact me with:
+ + waitcaleb@gmail.com
