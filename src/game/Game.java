@@ -12,13 +12,14 @@ import graphics.Window;
 import input.Keyboard;
 import input.Mouse;
 import level.Level;
+import math.NoiseMapGen;
 
 
 public class Game extends Canvas implements Runnable{
 	private static final long serialVersionUID = 1L;
 	
 	public static final int Width = 300;
-	public static final int Height = Width / 16*9;
+	public static final int Height = 168;
 	public static final int scale = 4;
 	
 	private boolean running = false;
@@ -32,6 +33,7 @@ public class Game extends Canvas implements Runnable{
 	Mouse mouse;
 	
 	Level currentLevel;
+	int[] map;
 	
 	BufferedImage image = new BufferedImage(Width, Height, BufferedImage.TYPE_INT_RGB);
 	private int[] pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
@@ -43,6 +45,8 @@ public class Game extends Canvas implements Runnable{
 		render = new Render(Width, Height);
 		
 		currentLevel = new Level("res/maps/spawn.csv");
+		
+		map = NoiseMapGen.mapNoise(16, 765943);
 		
 		keyboard = new Keyboard();
 		mouse = new Mouse();
@@ -77,6 +81,8 @@ public class Game extends Canvas implements Runnable{
 		
 		currentLevel.render(render, DeltaTime);
 		
+		//render.renderPixelArray(map, 16, 100, 100);
+		
 		for(int i = 0; i < pixels.length; i++){
 			pixels[i] = render.screen.pixels[i];
 		}
@@ -86,7 +92,6 @@ public class Game extends Canvas implements Runnable{
 		g.setColor(Color.black);
 		
 		g.fillRect(0, 0, getWidth(), getHeight());
-		
 		
 		g.setColor(Color.white);
 		g.drawImage(image, 0, 0, Width * scale, Height * scale, null);

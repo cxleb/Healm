@@ -74,6 +74,17 @@ public class Render {
 		screen.pixels[(xp-1) + (yp-1) * screen.Width] = Tinting.changeBrightness(screen.pixels[(xp-1) + (yp-1) * screen.Width], colour);
 	}
 	
+	public void renderPixelArray(int[] pixels, int size, int xp, int yp){
+		for(int y = 0; y < size; y++){
+			int ya = yp + y;
+			for(int x = 0; x < size; x++){
+				int xa = xp + x;
+				if(ya < 0 || ya >= screen.Height || xa < 0 || xa >= screen.Width) break;
+				screen.pixels[xa + ya * screen.Width] = pixels[x + y * size];
+			}
+		}
+	}
+	
 	public void renderLight(Light light){
 		int xx = light.getX() - xOffset;
 		int yy = light.getY() - yOffset;
