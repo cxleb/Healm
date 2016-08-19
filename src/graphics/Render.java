@@ -2,45 +2,33 @@ package graphics;
 
 import entities.lighting.Light;
 import graphics.sprites.Sprite;
-import graphics.tiles.Tile;
 import math.Tinting;
 
 import java.util.Arrays;
 
 public class Render {
     public static final int TRANSPARENT_COLOR = -65281;
-    //private int Width;
-    //private int Height;
-    //public int[] pixels;
 
     public Screen screen;
 
     public int xOffset = 0, yOffset = 0;
 
     public Render(int width, int height) {
-        //this.Width = width;
-        //this.Height = height;
-        //pixels = new int[width * height];
-
-        screen = new Screen(width, height);
+    	screen = new Screen(width, height);
     }
 
     public void clear() {
         Arrays.fill(screen.pixels, 0);
     }
+    
+    public void renderSprite(Sprite sprite, int xp, int yp) {
+        renderSpriteInternal(sprite, xp, yp, true);
+    }
+    
 
-    public void renderTile(Tile tile, int xp, int yp) {
+    public void renderOffsetSprite(Sprite sprite, int xp, int yp) {
         xp -= xOffset;
         yp -= yOffset;
-
-        renderSpriteInternal(tile.sprite, xp, yp, false);
-    }
-
-    public void renderSprite(Sprite sprite, int xp, int yp, boolean setOffset) {
-        if (setOffset) {
-            xp -= xOffset;
-            yp -= yOffset;
-        }
         renderSpriteInternal(sprite, xp, yp, true);
     }
 
@@ -81,20 +69,7 @@ public class Render {
         }
     }
 
-    public void renderPixelArray(int[] pixels, int size, int xp, int yp) {
-        for (int y = 0; y < size; y++) {
-            int ya = yp + y;
-            if (isBetween(ya, 0, screen.Height)) {
-                for (int x = 0; x < size; x++) {
-                    int xa = xp + x;
-                    if (isBetween(xa, 0, screen.Width)) {
-                        screen.pixels[xa + ya * screen.Width] = pixels[x + y * size];
-                    }
-                }
-            }
-        }
-    }
-
+    // TODO: Needs to be optimized
     public void renderLight(Light light) {
         int xx = light.getX() - xOffset;
         int yy = light.getY() - yOffset;

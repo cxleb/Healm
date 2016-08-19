@@ -43,9 +43,15 @@ public class AnimationComponent extends EntityComponent{
 
 	public void render(Entity entity, int x, int y, int delta, Render render) {
 		if(triggered){
-			render.renderSprite(sprites.get(curFrame), x, y, setOffset);	
+			if(setOffset)
+				render.renderOffsetSprite(sprites.get(curFrame), x, y);	
+			else
+				render.renderSprite(sprites.get(curFrame), x, y);	
 		}else if (printFirstFrame){
-			render.renderSprite(sprites.get(0), x, y, setOffset);
+			if(setOffset)
+				render.renderOffsetSprite(sprites.get(0), x, y);	
+			else
+				render.renderSprite(sprites.get(0), x, y);	
 		}
 	}
 

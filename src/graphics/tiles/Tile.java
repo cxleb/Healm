@@ -33,7 +33,7 @@ public class Tile {
 	}
 	
 	public void render(Render render, int x, int y){
-		render.renderTile(this, x, y);
+		render.renderOffsetSprite(this.sprite, x, y);
 	}
 
 }

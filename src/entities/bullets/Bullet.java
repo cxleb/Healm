@@ -25,7 +25,7 @@ public class Bullet extends Entity{
 	
 	public void entityRender(int delta, Render render){
 		if(!isDead){
-			render.renderSprite(Sprite.bullet_1, (int)dX, (int)dY, true);
+			render.renderOffsetSprite(Sprite.bullet_1, (int)dX, (int)dY);
 		}
 	}
 	

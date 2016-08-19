@@ -18,7 +18,10 @@ public class RenderComponent extends EntityComponent{
 	public void update(Entity entity, int delta) {	}
 
 	public void render(Entity entity, int x, int y, int delta, Render render) {
-			render.renderSprite(sprite, x, y, setOffset);
+		if(setOffset)
+			render.renderOffsetSprite(sprite, x, y);	
+		else
+			render.renderSprite(sprite, x, y);
 	}
 
 }

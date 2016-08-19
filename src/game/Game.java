@@ -12,7 +12,6 @@ import graphics.Window;
 import input.Keyboard;
 import input.Mouse;
 import level.Level;
-import math.NoiseMapGen;
 
 
 public class Game extends Canvas implements Runnable{
@@ -33,7 +32,6 @@ public class Game extends Canvas implements Runnable{
 	Mouse mouse;
 	
 	Level currentLevel;
-	int[] map;
 	
 	BufferedImage image = new BufferedImage(Width, Height, BufferedImage.TYPE_INT_RGB);
 	private int[] pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
@@ -45,8 +43,6 @@ public class Game extends Canvas implements Runnable{
 		render = new Render(Width, Height);
 		
 		currentLevel = new Level("res/maps/spawn.csv");
-		
-		map = NoiseMapGen.mapNoise(16, 765943);
 		
 		keyboard = new Keyboard();
 		mouse = new Mouse();
@@ -80,8 +76,6 @@ public class Game extends Canvas implements Runnable{
 		render.clear();
 		
 		currentLevel.render(render, DeltaTime);
-		
-		//render.renderPixelArray(map, 16, 100, 100);
 		
 		for(int i = 0; i < pixels.length; i++){
 			pixels[i] = render.screen.pixels[i];
