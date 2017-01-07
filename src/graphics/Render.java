@@ -21,6 +21,15 @@ public class Render {
         Arrays.fill(screen.pixels, 0);
     }
     
+    public void doSomethingDumb(Sprite[] array){
+    	int squaredbs = (int) Math.sqrt(array.length);
+    	for(int y = 0; y < squaredbs; y++){
+    		for(int x = 0; x < squaredbs; x++){
+        		renderSprite(array[x + y * squaredbs], x*16, y*16);
+        	}
+    	}
+    }
+    
     public void renderSprite(Sprite sprite, int xp, int yp) {
         renderSpriteInternal(sprite, xp, yp, true);
     }
@@ -33,7 +42,7 @@ public class Render {
     }
 
     private void renderSpriteInternal(Sprite sprite, int xp, int yp, boolean checkForTransparency) {
-        // Quickly check if the sprite is visible at all
+    	// Quickly check if the sprite is visible at all
         if (isBetween(xp, -sprite.SIZE + 1, screen.Width - 1)
                 && isBetween(yp, -sprite.SIZE + 1, screen.Height - 1)) {
             for (int y = Math.max(0, -yp); y < Math.min(sprite.SIZE, screen.Height - yp); y++) {
@@ -62,10 +71,10 @@ public class Render {
         xp -= xOffset;
         yp -= yOffset;
         if (isBetween(yp, 1, screen.Height) && isBetween(xp, 1, screen.Width)) {
-            screen.pixels[xp + yp * screen.Width] = Tinting.changeBrightness(screen.pixels[xp + yp * screen.Width], colour);
-            screen.pixels[xp + (yp - 1) * screen.Width] = Tinting.changeBrightness(screen.pixels[xp + (yp - 1) * screen.Width], colour);
-            screen.pixels[(xp - 1) + yp * screen.Width] = Tinting.changeBrightness(screen.pixels[(xp - 1) + yp * screen.Width], colour);
-            screen.pixels[(xp - 1) + (yp - 1) * screen.Width] = Tinting.changeBrightness(screen.pixels[(xp - 1) + (yp - 1) * screen.Width], colour);
+            screen.pixels[xp + yp * screen.Width] = Tinting.colourBlend(screen.pixels[xp + yp * screen.Width], colour);
+            screen.pixels[xp + (yp - 1) * screen.Width] = Tinting.colourBlend(screen.pixels[xp + (yp-1) * screen.Width], colour);
+            screen.pixels[(xp - 1) + yp * screen.Width] = Tinting.colourBlend(screen.pixels[(xp-1) + yp * screen.Width], colour);
+            screen.pixels[(xp - 1) + (yp - 1) * screen.Width] = Tinting.colourBlend(screen.pixels[(xp-1) + (yp - 1) * screen.Width], colour);
         }
     }
 

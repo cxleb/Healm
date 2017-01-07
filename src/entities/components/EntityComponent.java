@@ -2,6 +2,7 @@ package entities.components;
 
 import entities.Entity;
 import graphics.Render;
+import graphics.map.Map;
 
 public abstract class EntityComponent {
 	
@@ -11,7 +12,7 @@ public abstract class EntityComponent {
 		this.componentName = name;
 	}
 	
-	public abstract void update(Entity entity, int delta);
+	public abstract void update(Entity entity, int delta, Map map);
 	public abstract void render(Entity entity, int x, int y, int delta, Render render);
 
 }

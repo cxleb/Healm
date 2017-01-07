@@ -5,28 +5,28 @@ import java.util.List;
 import java.util.Random;
 
 import entities.Entity;
-import entities.components.RenderComponent;
+import entities.EntityManager;
 import graphics.Render;
 import graphics.map.Map;
-import graphics.sprites.Sprite;
 
 public class ParticleSpawner extends Entity{
 
 	List<Particle> particles;
 	Random random;
 	
-	public ParticleSpawner(int x, int y, boolean drawSpawner) {
+	public ParticleSpawner(int x, int y) {
 		super(x, y);
 		particles = new ArrayList<Particle>();
 		random = new Random();
-		if(drawSpawner){
-			addComponent(new RenderComponent(Sprite.spawner_1, drawSpawner));
-		}
 	}
 	
-	public void addParticles(int amount, int life){
+	public void addParticles(int amount, int life, int colour, boolean randomColour){
 		for(int i = 0; i < amount; i++){
-			particles.add(new Particle(7+x, 7+y, random.nextGaussian(), random.nextGaussian(), life));
+			if(randomColour){
+				particles.add(new Particle(7+x, 7+y, random.nextGaussian(), random.nextGaussian(), life, random.nextInt()));
+			}else{
+				particles.add(new Particle(7+x, 7+y, random.nextGaussian(), random.nextGaussian(), life, colour));
+			}
 		}
 	}
 	
@@ -36,9 +36,9 @@ public class ParticleSpawner extends Entity{
 		}
 	}
 	
-	public void entityUpdate(int delta, Map map){
+	public void entityUpdate(int delta, Map map, EntityManager manager){
 		for(Particle particle:particles){
-			particle.update(delta, map);	
+			particle.update(delta, map, manager);	
 		}
 		
 		for(int i = 0; i < particles.size(); i++){

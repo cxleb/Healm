@@ -29,7 +29,7 @@ public class MapFileReader {
 		
 		Size = (int)Math.sqrt((double)mapContents.length);
 		
-		System.out.println("CSV: map format. Map size: " + (Size+1));
+		Log.Log.log_add("Map Format: CSV, Map size: " + (Size));
 		
 		tiles = new int[Size * Size];
 		

@@ -1,14 +1,12 @@
 package entities;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import entities.bullets.BulletRender;
+import entities.bullets.Bullet;
 import entities.components.AnimationComponent;
 import game.Game;
 import graphics.Render;
 import graphics.map.Map;
 import graphics.sprites.Sprite;
+import graphics.sprites.Spritesheet;
 import input.Keyboard;
 import input.Mouse;
 
@@ -16,6 +14,9 @@ public class Player extends Entity{
 
 	public int playerX = 0;
 	public int playerY = 0;
+	public int playerSpriteSize = 0;
+	
+	public int speed = 1;
 	
 	public boolean canMoveUp = true;
 	public boolean canMoveDown = true;
@@ -27,44 +28,48 @@ public class Player extends Entity{
 	
 	private AnimationComponent leftAnim;
 	private AnimationComponent rightAnim;
-	List<Sprite> leftSprites;
-	List<Sprite> rightSprites;
-	
-	BulletRender bullets;
 	
 	int timer = 0;
-	int fireRate = 10;
+	int fireRate = 5;
+	
+	public Spritesheet player_sprites = new Spritesheet("res/spritesheets/player_spritesheet.png", 48);
+	
+	public Sprite manleft_0 = new Sprite(player_sprites, 16, 0, 1);
+	public Sprite manleft_1 = new Sprite(player_sprites, 16, 1, 1);
+	public Sprite manleft_2 = new Sprite(player_sprites, 16, 2, 1);
+	
+	public Sprite manright_0 = new Sprite(player_sprites, 16, 0, 0);
+	public Sprite manright_1 = new Sprite(player_sprites, 16, 1, 0);
+	public Sprite manright_2 = new Sprite(player_sprites, 16, 2, 0);
 	
 	
-	public Player(int x, int y) {
+	
+	public Player(int x, int y, int Size) {
 		super(Game.Width/2-8, Game.Height/2-8);
 		playerX = x;
 		playerY = y;
+		playerSpriteSize = Size;
 		
-		leftSprites = new ArrayList<Sprite>();
-		rightSprites = new ArrayList<Sprite>();
-		
-		leftSprites.add(Sprite.manleft_0);
-		leftSprites.add(Sprite.manleft_1);
-		leftSprites.add(Sprite.manleft_0);
-		leftSprites.add(Sprite.manleft_2);
-		
-		rightSprites.add(Sprite.manright_0);
-		rightSprites.add(Sprite.manright_1);
-		rightSprites.add(Sprite.manright_0);
-		rightSprites.add(Sprite.manright_2);
-		
-		leftAnim = new AnimationComponent(leftSprites, 4, false);
-		rightAnim = new AnimationComponent(rightSprites, 4, false);
+		leftAnim = new AnimationComponent(false);
+		rightAnim = new AnimationComponent(false);
 		leftAnim.printFirstFrame = false;
+		
+		leftAnim.add(manleft_0);
+		leftAnim.add(manleft_1);
+		leftAnim.add(manleft_0);
+		leftAnim.add(manleft_2);
+		
+		rightAnim.add(manright_0);
+		rightAnim.add(manright_1);
+		rightAnim.add(manright_0);
+		rightAnim.add(manright_2);
 		
 		addComponent(rightAnim);
 		addComponent(leftAnim);
 		
-		bullets = new BulletRender(playerX+(Game.Width/2-8),playerY+(Game.Height/2-8), 2);
 	}
 	
-	public void entityUpdate(int delta, Map map){
+	public void entityUpdate(int delta, Map map, EntityManager manager){
 		
 		// moving and animation
 		if(map.getTileAt( (playerX + (Game.Width/2)) / 16 , (playerY + (Game.Height/2 - 8 )) / 16).isSolid){
@@ -91,6 +96,7 @@ public class Player extends Entity{
 			canMoveLeft = true;
 		}
 		
+		
 		if(side){
 			leftAnim.printFirstFrame = false;
 			rightAnim.printFirstFrame = true;
@@ -114,10 +120,10 @@ public class Player extends Entity{
 		}
 	
 		if(Keyboard.up && canMoveUp) {
-			playerY -= 1;
+			playerY -= speed;
 			animateY = true;
 		} else if(Keyboard.down && canMoveDown){
-			playerY += 1;
+			playerY += speed;
 			animateY = true;
 		} else {
 			animateY = false;
@@ -125,13 +131,19 @@ public class Player extends Entity{
 		if(Keyboard.right && canMoveRight){
 			side = true;
 			animate = true;
-			playerX += 1;
+			playerX += speed;
 		} else if(Keyboard.left && canMoveLeft) {
 			side = false;
 			animate = true;
-			playerX -= 1;
+			playerX -= speed;
 		} else {
 			animate = false;
+		}
+		
+		if(Keyboard.p){
+			speed = 10;
+		}else{
+			speed = 1;
 		}
 		
 		
@@ -142,19 +154,16 @@ public class Player extends Entity{
 			double dir = Math.atan2(by, bx);
 			by = Math.sin(dir)*1;
 			bx = Math.cos(dir)*1;
-			bullets.addBullet(playerX+(Game.Width/2-8), playerY+(Game.Height/2-8), bx, by);
+			//bullets.addBullet(playerX+(Game.Width/2-4), playerY+(Game.Height/2-4), bx, by);
+			manager.addEntity(new Bullet(playerX+(Game.Width/2-4), playerY+(Game.Height/2-4), bx, by, 2, 10));
 			timer = fireRate;
 		}
 		if(timer > 0)
 			timer--;
 		
-		bullets.setX(playerX+(Game.Width/2-8));
-		bullets.setY(playerY+(Game.Height/2-8));
-		bullets.update(delta, map);
 	}
 	
 	public void entityRender(int delta, Render render){
-		bullets.render(delta, render);
 	}
 
 }

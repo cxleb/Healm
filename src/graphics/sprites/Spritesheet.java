@@ -12,10 +12,6 @@ public class Spritesheet {
 	public final int SIZE;
 	public int[] pixels;
 	
-	public static Spritesheet mainSpriteSheet = new Spritesheet("res/spritesheets/main_spritesheet.png", 256);
-	public static Spritesheet bulletSpriteSheet = new Spritesheet("res/spritesheets/bullet.png", 8);
-	
-	
 	
 	public Spritesheet(String Path, int Size){
 		this.path = Path;
@@ -34,6 +30,10 @@ public class Spritesheet {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	public int getBound(int spriteSize){
+		return SIZE / spriteSize;
 	}
 
 }

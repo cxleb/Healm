@@ -13,6 +13,10 @@ public class Entity{
 	
 	protected int x = 0;
 	protected int y = 0;
+	protected int health = 1;
+	protected int dmg = 0;
+	protected boolean takeDmg = false;
+	
 	
 	
 	public Entity(int x, int y) {
@@ -21,16 +25,24 @@ public class Entity{
 		this.y = y;
 	}
 	
+	public Entity(int x, int y, int health, int dmg, boolean takeDmg) {
+		components = new ArrayList<EntityComponent>();
+		this.x = x;
+		this.y = y;
+		this.health = health;
+		this.dmg = dmg;
+		this.takeDmg = takeDmg;
+	}
+
 	public final void addComponent(EntityComponent component){
-		System.out.println("Adding Component: " + component.componentName);
 		components.add(component);
 	}
 
-	public final void update(int delta, Map map) {
+	public final void update(int delta, Map map, EntityManager manager) {
 		for(EntityComponent component:components){
-			component.update(this, delta);
+			component.update(this, delta, map);
 		}
-		entityUpdate(delta, map);
+		entityUpdate(delta, map, manager);
 	}
 
 	public  final void render(int delta, Render render) {
@@ -38,6 +50,30 @@ public class Entity{
 			component.render(this, x, y, delta, render);
 		}
 		entityRender(delta, render);
+	}
+
+	public int getHealth() {
+		return health;
+	}
+
+	public void setHealth(int health) {
+		this.health = health;
+	}
+
+	public int getDmg() {
+		return dmg;
+	}
+
+	public void setDmg(int dmg) {
+		this.dmg = dmg;
+	}
+
+	public boolean isTakeDmg() {
+		return takeDmg;
+	}
+
+	public void setHasLoot(boolean takeDmg) {
+		this.takeDmg = takeDmg;
 	}
 
 	public final int getX() {
@@ -67,6 +103,6 @@ public class Entity{
 	
 	public void entityRender(int delta, Render render){}
 	
-	public void entityUpdate(int delta, Map map){}
+	public void entityUpdate(int delta, Map map, EntityManager manager){}
 
 }

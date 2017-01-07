@@ -17,9 +17,9 @@ import level.Level;
 public class Game extends Canvas implements Runnable{
 	private static final long serialVersionUID = 1L;
 	
-	public static final int Width = 300;
-	public static final int Height = 168;
-	public static final int scale = 4;
+	public static final int Width = 400; // 300
+	public static final int Height = 225; // 168
+	public static final int scale = 3;
 	
 	private boolean running = false;
 	
@@ -42,7 +42,7 @@ public class Game extends Canvas implements Runnable{
 		window = new Window(Width * scale, Height * scale, "This is the Title", this);
 		render = new Render(Width, Height);
 		
-		currentLevel = new Level("res/maps/spawn.csv");
+		currentLevel = new Level("res/maps/dank.csv", "res/spritesheets/main_spritesheet", 256, 16);
 		
 		keyboard = new Keyboard();
 		mouse = new Mouse();
@@ -54,7 +54,7 @@ public class Game extends Canvas implements Runnable{
 	
 	public synchronized void start(){
 		running = true;
-		thread = new Thread(this);
+		thread = new Thread(this, "Game Thread");
 		thread.start();	
 	}
 	public synchronized void stop(){

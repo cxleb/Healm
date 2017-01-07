@@ -1,9 +1,11 @@
 package entities.components;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import entities.Entity;
 import graphics.Render;
+import graphics.map.Map;
 import graphics.sprites.Sprite;
 
 public class AnimationComponent extends EntityComponent{
@@ -18,16 +20,23 @@ public class AnimationComponent extends EntityComponent{
 	private int frameMax = 0;
 	private int timer = 0;
 	private int fps = 0;
+	private int frames = 0;
 	
-	public AnimationComponent(List<Sprite> sprites, int fps, boolean setOffset) {
+	public AnimationComponent(boolean setOffset) {
 		super("Animation Component");
-		this.sprites = sprites;
-		frameMax = sprites.size() - 1;
-		this.fps = 60/fps;
+		this.sprites = new ArrayList<Sprite>();
 		this.setOffset = setOffset;
 	}
+	
+	public void add(Sprite sprite){
+		sprites.add(sprite);
+		frames++;
+		frameMax = frames - 1;
+		fps = 60/frames;
+	
+	}
 
-	public void update(Entity entity, int delta) {
+	public void update(Entity entity, int delta, Map map) {
 		if (timer > fps){
 			timer = 0;
 			curFrame++;
