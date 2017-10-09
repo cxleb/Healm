@@ -5,7 +5,6 @@ import java.util.Random;
 import graphics.Render;
 import graphics.sprites.Sprite;
 import graphics.sprites.Spritesheet;
-import graphics.tiles.MapedTiles;
 import graphics.tiles.Tile;
 import input.MapFileReader;
 
@@ -14,7 +13,6 @@ public class Map {
 	public int Width;
 	public int Height;
 	public int[] tiles;
-	public MapedTiles atiles;
 	
 	public Spritesheet bulletSpriteSheet = new Spritesheet("res/spritesheets/spawn_tile.png", 16);
 	public Sprite spawnS = new Sprite(bulletSpriteSheet, 16, 0, 0);
@@ -47,9 +45,6 @@ public class Map {
 	/////////////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////////////
 	
-	public void giveTiles(MapedTiles tiles){
-		atiles = tiles;
-	}
 	
 	public void render(Render render){
 		for (int y = 0; y < Height; y++){
@@ -61,7 +56,7 @@ public class Map {
 	
 	public Tile getTileAt(int x, int y){
 		if(x < 0 || x >= Width || y < 0 || y >= Height){
-			return atiles.tiles[0];
+			return Tile.tiles[0];
 		}
 		
 		int tileID = tiles[x + y * Width];
@@ -69,7 +64,7 @@ public class Map {
 			return spawn;
 		}
 		
-		return atiles.tiles[tileID];
+		return Tile.tiles[tileID];
 	}
 	
 	public int GetSpawnX(){

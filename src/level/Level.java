@@ -10,7 +10,6 @@ import entities.mobs.Unicorn;
 import game.Game;
 import graphics.Render;
 import graphics.map.Map;
-import graphics.tiles.MapedTiles;
 
 public class Level {
 	
@@ -24,9 +23,7 @@ public class Level {
 	
 	public Level(String mapPath, String sheetPath, int sheetSize, int spriteSize){
 		
-		MapedTiles tiles = new MapedTiles(sheetPath, sheetSize, spriteSize);
 		map = new Map(mapPath);
-		map.giveTiles(tiles);
 		
 		lightMap = new LightMap();
 		player = new Player(map.GetSpawnX() - (Game.Width/2-8), map.GetSpawnY() - (Game.Height/2-8), 16);

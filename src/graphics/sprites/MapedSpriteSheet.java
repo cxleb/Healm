@@ -7,6 +7,8 @@ public class MapedSpriteSheet {
 	Spritesheet sheet;
 	public Sprite sprites[];
 	
+	public static MapedSpriteSheet isheet = new MapedSpriteSheet("res/spritesheets/i_spritesheet.png", 128, 16);
+	
 	public MapedSpriteSheet(String sheetName, int sheetSize,int spriteSize){
 		
 		sheet = new Spritesheet(sheetName, sheetSize);

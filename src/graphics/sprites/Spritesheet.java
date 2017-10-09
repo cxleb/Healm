@@ -13,6 +13,8 @@ public class Spritesheet {
 	public int[] pixels;
 	
 	
+	
+	
 	public Spritesheet(String Path, int Size){
 		this.path = Path;
 		this.SIZE = Size;
