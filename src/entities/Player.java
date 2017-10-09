@@ -16,7 +16,7 @@ public class Player extends Entity{
 	public int playerY = 0;
 	public int playerSpriteSize = 0;
 	
-	public int speed = 1;
+	public int speed = 2;
 	
 	public boolean canMoveUp = true;
 	public boolean canMoveDown = true;
@@ -143,7 +143,7 @@ public class Player extends Entity{
 		if(Keyboard.p){
 			speed = 10;
 		}else{
-			speed = 1;
+			speed = 2;
 		}
 		
 		
@@ -155,7 +155,7 @@ public class Player extends Entity{
 			by = Math.sin(dir)*1;
 			bx = Math.cos(dir)*1;
 			//bullets.addBullet(playerX+(Game.Width/2-4), playerY+(Game.Height/2-4), bx, by);
-			manager.addEntity(new Bullet(playerX+(Game.Width/2-4), playerY+(Game.Height/2-4), bx, by, 2, 10));
+			manager.addEntity(new Bullet(playerX+(Game.Width/2-4), playerY+(Game.Height/2-4), bx, by, 4, 10));
 			timer = fireRate;
 		}
 		if(timer > 0)

@@ -34,15 +34,12 @@ public class Level {
 		random = new Random(System.currentTimeMillis());
 		
 		for(int i = 0; i < 20; i++){
-			manager.addEntity(new Unicorn(random.nextInt(map.Height*16),random.nextInt(map.Height*16)));
+			manager.addEntityRandomly(new Unicorn(0,0), map);
 		}
 		
 		for(int i = 0; i < 20; i++){
-			manager.addEntity(new Poo(random.nextInt(map.Height*16),random.nextInt(map.Height*16)));
+			manager.addEntityRandomly(new Poo(0,0), map);
 		}
-		
-		//manager.addEntity(player);
-		
 	}
 	
 	public void update(int delta){

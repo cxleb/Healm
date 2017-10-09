@@ -30,6 +30,20 @@ public class EntityManager {
 		entities.add(entity);
 	}
 	
+	public void addEntityRandomly(Entity entity, Map map){
+		boolean placed = false;
+		while(!placed){
+			int newX = random.nextInt(map.Height*16);
+			int newY = random.nextInt(map.Height*16);
+			if(!map.getTileAt((newX + 8) / 16, (newY + 8) / 16).isSolid){
+				entity.setX(newX);
+				entity.setY(newY);
+				entities.add(entity);
+				placed = true;
+			}
+		}
+	}
+	
 	public void updateMobs(int delta, Map map, EntityManager manager){
 		for(Entity entity:entities){
 			entity.update(delta, map, manager);	

@@ -68,6 +68,7 @@ public class Map {
 		if(tileID == -1){
 			return spawn;
 		}
+		
 		return atiles.tiles[tileID];
 	}
 	
