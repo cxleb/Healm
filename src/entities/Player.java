@@ -2,8 +2,11 @@ package entities;
 
 import entities.bullets.Bullet;
 import entities.components.AnimationComponent;
+import entities.mobs.Poo;
+import entities.tile.Spike;
 import game.Game;
 import graphics.Render;
+import graphics.font.Font;
 import graphics.map.Map;
 import graphics.sprites.Sprite;
 import graphics.sprites.Spritesheet;
@@ -17,6 +20,8 @@ public class Player extends Entity{
 	public int playerSpriteSize = 0;
 	
 	public int speed = 2;
+	
+	public int hitTimer = 0;
 	
 	public boolean canMoveUp = true;
 	public boolean canMoveDown = true;
@@ -64,9 +69,10 @@ public class Player extends Entity{
 		rightAnim.add(manright_0);
 		rightAnim.add(manright_2);
 		
-		addComponent(rightAnim);
-		addComponent(leftAnim);
+		//addComponent(rightAnim);
+		//addComponent(leftAnim);
 		
+		this.health = 100;
 	}
 	
 	public void entityUpdate(int delta, Map map, EntityManager manager){
@@ -161,9 +167,35 @@ public class Player extends Entity{
 		if(timer > 0)
 			timer--;
 		
+		leftAnim.update(this, delta, map);
+		rightAnim.update(this, delta, map);
+		
+		setX(playerX + Game.Width/2-8);
+		setY(playerY + Game.Height/2-8);
+		
+		if(hitTimer > 0)
+			hitTimer--;
 	}
 	
 	public void entityRender(int delta, Render render){
+		
+		Font.Arial8White.renderFont(render, "HEALTH: " + this.health, 0, 0);
+		
+		leftAnim.render(this, Game.Width/2-8, Game.Height/2-8, delta, render);
+		rightAnim.render(this, Game.Width/2-8, Game.Height/2-8, delta, render);
+		
+	}
+	public void entityCollide(int delta, Map map, EntityManager manager, Entity collided){
+		if (hitTimer <= 0){
+			if (collided instanceof Poo){
+				this.health -= 5;
+				hitTimer += 60;
+			}
+			if (collided instanceof Spike){
+				this.health -= 5;
+				hitTimer += 60;
+			}
+		}
 	}
 
 }

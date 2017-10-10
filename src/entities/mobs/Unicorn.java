@@ -2,6 +2,7 @@ package entities.mobs;
 
 import entities.Entity;
 import entities.EntityManager;
+import entities.bullets.Bullet;
 import entities.components.AnimationComponent;
 import entities.components.RandomMovementComponent;
 import graphics.map.Map;
@@ -113,5 +114,12 @@ public class Unicorn extends Entity{
 			}
 		}
 		
+	}
+    
+    public void entityCollide(int delta, Map map, EntityManager manager, Entity collided)
+	{
+		if (collided instanceof Bullet){
+			this.health = 0;
+		}
 	}
 }

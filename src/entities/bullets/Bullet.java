@@ -42,13 +42,7 @@ public class Bullet extends Entity{
 		if(map.getTileAt( ((int)dX)/16 , ((int)dY)/16).isSolid){
 			this.health = 0;
 		}
-		if(map.getTileAt( ((int)dX+9)/16 , ((int)dY)/16).isSolid){
-			this.health = 0;
-		}
-		if(map.getTileAt( ((int)dX)/16 , ((int)dY+9)/16).isSolid){
-			this.health = 0;
-		}
-		if(map.getTileAt( ((int)dX+9)/16 , ((int)dY+9)/16).isSolid){
+		if(map.getTileAt( ((int)dX + 8 )/16 , ((int)dY + 8)/16).isSolid){
 			this.health = 0;
 		}
 		if(this.health != 0){

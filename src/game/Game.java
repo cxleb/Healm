@@ -17,9 +17,9 @@ import level.Level;
 public class Game extends Canvas implements Runnable{
 	private static final long serialVersionUID = 1L;
 	
-	public static final int Width = 530; // 300
-	public static final int Height = 300; // 168
-	public static final int scale = 2;
+	public static final int Width = 300; // 300
+	public static final int Height = 168; // 168
+	public static final int scale = 3;
 	
 	private boolean running = false;
 	

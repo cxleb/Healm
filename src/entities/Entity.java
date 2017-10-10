@@ -6,6 +6,7 @@ import java.util.List;
 import entities.components.EntityComponent;
 import graphics.Render;
 import graphics.map.Map;
+import graphics.sprites.MapedSpriteSheet;
 
 public class Entity{
 
@@ -50,6 +51,8 @@ public class Entity{
 			component.render(this, x, y, delta, render);
 		}
 		entityRender(delta, render);
+		
+		//render.renderOffsetSprite(MapedSpriteSheet.isheet.sprites[0], x, y);
 	}
 
 	public int getHealth() {
@@ -104,5 +107,7 @@ public class Entity{
 	public void entityRender(int delta, Render render){}
 	
 	public void entityUpdate(int delta, Map map, EntityManager manager){}
+	
+	public void entityCollide(int delta, Map map, EntityManager manager, Entity collided){}
 
 }

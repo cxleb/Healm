@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import entities.bullets.Bullet;
 import entities.mobs.Poo;
 import entities.mobs.Unicorn;
 import entities.particle.ParticleSpawner;
+import entities.tile.Chest;
 import graphics.Render;
 import graphics.map.Map;
 
@@ -45,8 +47,13 @@ public class EntityManager {
 	}
 	
 	public void updateMobs(int delta, Map map, EntityManager manager){
-		for(Entity entity:entities){
-			entity.update(delta, map, manager);	
+		//for(Entity entity:entities){
+		//	entity.update(delta, map, manager);	
+		//}
+		
+		for(int i = 0; i < entities.size(); i++){
+			Entity clazz = entities.get(i);
+			clazz.update(delta, map, manager);
 		}
 		
 		for(int i = 0; i < entities.size(); i++){
@@ -68,11 +75,18 @@ public class EntityManager {
 		for(Entity entity1:entities){
 			for(Entity entity2:entities){
 				if(!entity2.getClass().equals(entity1.getClass())){
-					if(entity2.getX() > entity1.getX() && entity2.getX() < entity1.getX() + 16){
-						if(entity2.getY() > entity1.getY() && entity2.getY() < entity1.getY() + 16){
-							entity1.setHealth(entity1.getHealth() - entity2.getDmg());
-						
-						}
+					int x1 = entity1.getX();
+					int y1 = entity1.getY();
+					int x2 = entity2.getX();
+					int y2 = entity2.getY();
+					if(x2 > x1 && x2 < x1 + 16 && y2 > y1 && y2 < y1 + 16 ){
+						entity1.entityCollide(delta, map, manager, entity2);
+					}
+					if(x2 + 16 > x1 && x2 + 16  < x1 + 16 && y2 > y1 && y2  < y1 + 16){
+						entity1.entityCollide(delta, map, manager, entity2);	
+					}
+					if(x2 > x1 && x2 < x1 + 16 && y2 + 16 > y1 && y2 + 16 < y1 + 16){
+						entity1.entityCollide(delta, map, manager, entity2);
 					}
 				}
 			}
@@ -83,8 +97,12 @@ public class EntityManager {
 	}
 	
 	public void renderMobs(int delta, Render render){
-		for(Entity entity:entities){
-			entity.render(delta, render);	
+		//for(Entity entity:entities){
+		//	entity.render(delta, render);	
+		//}
+		for(int i = 0; i < entities.size(); i++){
+			Entity clazz = entities.get(i);
+			clazz.render(delta, render);
 		}
 		spawner.render(delta, render);
 	}

@@ -7,6 +7,7 @@ public class Font {
 	
 	
 	public static Font Arial8 = new Font("res/fonts/arial 8.png", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,;:!?'\"%+-", 8, 104);
+	public static Font Arial8White = new Font("res/fonts/arial 8 white.png", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,;:!?'\"%+-", 8, 104);
 	
 	
 	MapedSpriteSheet sheet;
