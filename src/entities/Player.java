@@ -72,7 +72,6 @@ public class Player extends Entity{
 		//addComponent(rightAnim);
 		//addComponent(leftAnim);
 		
-		this.health = 100;
 	}
 	
 	public void entityUpdate(int delta, Map map, EntityManager manager){
@@ -179,7 +178,9 @@ public class Player extends Entity{
 	
 	public void entityRender(int delta, Render render){
 		
-		Font.Arial8White.renderFont(render, "HEALTH: " + this.health, 0, 0);
+		Font.Arial8White.renderFont(render, "HEALTH: " + PlayerProfile.profile.health, 0, 0);
+		Font.Arial8White.renderFont(render, "SCORE: " + PlayerProfile.profile.score, 0, 10);
+		
 		
 		leftAnim.render(this, Game.Width/2-8, Game.Height/2-8, delta, render);
 		rightAnim.render(this, Game.Width/2-8, Game.Height/2-8, delta, render);
@@ -188,11 +189,11 @@ public class Player extends Entity{
 	public void entityCollide(int delta, Map map, EntityManager manager, Entity collided){
 		if (hitTimer <= 0){
 			if (collided instanceof Poo){
-				this.health -= 5;
+				PlayerProfile.profile.health -= 5;
 				hitTimer += 60;
 			}
 			if (collided instanceof Spike){
-				this.health -= 5;
+				PlayerProfile.profile.health -= 5;
 				hitTimer += 60;
 			}
 		}

@@ -2,9 +2,11 @@ package entities.mobs;
 
 import entities.Entity;
 import entities.EntityManager;
+import entities.PlayerProfile;
 import entities.bullets.Bullet;
 import entities.components.AnimationComponent;
 import entities.components.RandomMovementComponent;
+import graphics.font.Font;
 import graphics.map.Map;
 import graphics.sprites.Sprite;
 import graphics.sprites.Spritesheet;
@@ -50,6 +52,8 @@ public class Poo extends Entity{
 	{
 		if (collided instanceof Bullet){
 			this.health = 0;
+			PlayerProfile.profile.score += 10;
+			
 		}
 	}
 

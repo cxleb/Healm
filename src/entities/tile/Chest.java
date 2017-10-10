@@ -2,6 +2,7 @@ package entities.tile;
 
 import entities.Entity;
 import entities.EntityManager;
+import entities.PlayerProfile;
 import entities.bullets.Bullet;
 import graphics.map.Map;
 
@@ -20,9 +21,11 @@ public class Chest extends Entity{
 			int idloc = tx + ty * map.Width;
 			if(map.tiles[idloc] == 25){
 				map.tiles[idloc] = 26;
+				PlayerProfile.profile.score += 50;
 			}
 			if(map.tiles[idloc] == 43){
 				map.tiles[idloc] = 42;
+				PlayerProfile.profile.score += 50;
 			}
 			
 			
