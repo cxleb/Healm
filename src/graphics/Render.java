@@ -66,6 +66,18 @@ public class Render {
             }
         }
     }
+    
+    public void renderRect(int x, int y, int w, int h, int colour, boolean offset){
+    	if(offset){
+    		x -= xOffset;
+            y -= yOffset;
+    	}
+    	for(int z = 0; z < h; z++){
+    		for(int c = 0; c < w; c++){
+    			screen.pixels[(x + c) + (y + z) * screen.Width] = colour;
+        	}
+    	}
+    }
 
     public void renderParticle(int xp, int yp, int colour) {
         xp -= xOffset;
@@ -77,7 +89,7 @@ public class Render {
             screen.pixels[(xp - 1) + (yp - 1) * screen.Width] = Tinting.colourBlend(screen.pixels[(xp-1) + (yp - 1) * screen.Width], colour);
         }
     }
-
+    
     // TODO: Needs to be optimized
     public void renderLight(Light light) {
         int xx = light.getX() - xOffset;

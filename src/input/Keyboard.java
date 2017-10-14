@@ -5,9 +5,10 @@ import java.awt.event.KeyListener;
 
 public class Keyboard implements KeyListener{
 
-	public boolean[] keys = new boolean[150];
+	public static boolean[] keys = new boolean[200];
 	public static boolean up, left, right , down;
 	public static boolean o, p;
+	public static boolean k1;
 	
 	public void keyPressed(KeyEvent e) {
 		keys[e.getKeyCode()] = true;
@@ -17,6 +18,7 @@ public class Keyboard implements KeyListener{
 		right = keys[KeyEvent.VK_RIGHT] || keys[KeyEvent.VK_D];
 		o = keys[KeyEvent.VK_O];
 		p = keys[KeyEvent.VK_P];
+		k1 = keys[KeyEvent.VK_1];
 	}
 
 	public void keyReleased(KeyEvent e) {
@@ -27,6 +29,7 @@ public class Keyboard implements KeyListener{
 		right = keys[KeyEvent.VK_RIGHT] || keys[KeyEvent.VK_D];
 		o = keys[KeyEvent.VK_O];
 		p = keys[KeyEvent.VK_P];
+		k1 = keys[KeyEvent.VK_1];
 	}
 
 	public void keyTyped(KeyEvent e) {

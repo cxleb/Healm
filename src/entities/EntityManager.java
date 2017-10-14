@@ -4,11 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import entities.bullets.Bullet;
 import entities.mobs.Poo;
 import entities.mobs.Unicorn;
 import entities.particle.ParticleSpawner;
-import entities.tile.Chest;
 import graphics.Render;
 import graphics.map.Map;
 
@@ -62,18 +60,21 @@ public class EntityManager {
 				spawner.setY((int)entities.get(i).getY());
 				if(entities.get(i) instanceof Unicorn){
 					spawner.addParticles(50, 50, 0, true);
+					PlayerProfile.profile.xp += 10;
 				}else if(entities.get(i) instanceof Poo){
 					spawner.addParticles(50, 50, 0xF99661f, false);
+					PlayerProfile.profile.xp += 10;
 				}else if(entities.get(i).isTakeDmg()){
 					spawner.addParticles(50, 50, 0xffffff, false);
-					
 				}
 				entities.remove(i);
 			}
 		}
 		
-		for(Entity entity1:entities){
-			for(Entity entity2:entities){
+		for(int i = 0; i < entities.size(); i++){
+			Entity entity1 = entities.get(i);
+			for(int z = 0; z < entities.size(); z++){
+				Entity entity2 = entities.get(z);
 				if(!entity2.getClass().equals(entity1.getClass())){
 					int x1 = entity1.getX();
 					int y1 = entity1.getY();

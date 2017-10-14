@@ -2,7 +2,6 @@ package entities.mobs;
 
 import entities.Entity;
 import entities.EntityManager;
-import entities.PlayerProfile;
 import entities.bullets.Bullet;
 import entities.components.AnimationComponent;
 import entities.components.RandomMovementComponent;
@@ -15,13 +14,13 @@ public class Unicorn extends Entity{
 	private AnimationComponent leftAnim;
 	private AnimationComponent rightAnim;
 	
-	public Spritesheet unicorn_sprites = new Spritesheet("res/spritesheets/unicorn_spritesheet.png", 32);
+	public static final Spritesheet unicorn_sprites = new Spritesheet("res/spritesheets/unicorn_spritesheet.png", 32);
 	
-	public Sprite left_0 = new Sprite(unicorn_sprites, 16, 0, 1);
-	public Sprite left_1 = new Sprite(unicorn_sprites, 16, 1, 1);
+	public static final Sprite left_0 = new Sprite(unicorn_sprites, 16, 0, 1);
+	public static final Sprite left_1 = new Sprite(unicorn_sprites, 16, 1, 1);
 	
-	public Sprite right_0 = new Sprite(unicorn_sprites, 16, 0, 0);
-	public Sprite right_1 = new Sprite(unicorn_sprites, 16, 1, 0);
+	public static final Sprite right_0 = new Sprite(unicorn_sprites, 16, 0, 0);
+	public static final Sprite right_1 = new Sprite(unicorn_sprites, 16, 1, 0);
 	
 	
 	private boolean animateY 	= false;
@@ -120,8 +119,8 @@ public class Unicorn extends Entity{
     public void entityCollide(int delta, Map map, EntityManager manager, Entity collided)
 	{
 		if (collided instanceof Bullet){
-			this.health = 0;
-			PlayerProfile.profile.score += 10;
+			this.health -= collided.getDmg();
+			collided.health = 0;
 		}
 	}
 }

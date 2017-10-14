@@ -1,17 +1,19 @@
 package entities;
 
-import entities.bullets.Bullet;
+import entities.bullets.FireBullet;
 import entities.components.AnimationComponent;
 import entities.mobs.Poo;
+import entities.mobs.Unicorn;
 import entities.tile.Spike;
+import entities.tile.Teleporter;
 import game.Game;
 import graphics.Render;
-import graphics.font.Font;
 import graphics.map.Map;
 import graphics.sprites.Sprite;
 import graphics.sprites.Spritesheet;
 import input.Keyboard;
 import input.Mouse;
+import main.Main;
 
 public class Player extends Entity{
 
@@ -29,7 +31,9 @@ public class Player extends Entity{
 	public boolean canMoveRight = true;
 	public boolean side = true; // right = true, left = false
 	public boolean animate;
+	public boolean animateX;
 	public boolean animateY;
+	public boolean animateY2;
 	
 	private AnimationComponent leftAnim;
 	private AnimationComponent rightAnim;
@@ -74,6 +78,8 @@ public class Player extends Entity{
 		
 	}
 	
+	boolean oldo = false;
+	
 	public void entityUpdate(int delta, Map map, EntityManager manager){
 		
 		// moving and animation
@@ -105,7 +111,7 @@ public class Player extends Entity{
 		if(side){
 			leftAnim.printFirstFrame = false;
 			rightAnim.printFirstFrame = true;
-			if(animateY || animate){
+			if(animateY || animate || animateX || animateY2){
 				leftAnim.triggered = false;
 				rightAnim.triggered = true;
 			}else{
@@ -115,7 +121,7 @@ public class Player extends Entity{
 		}else{
 			leftAnim.printFirstFrame = true;
 			rightAnim.printFirstFrame = false;
-			if(animateY || animate){
+			if(animateY || animate || animateX || animateY2){
 				leftAnim.triggered = true;
 				rightAnim.triggered = false;
 			}else{
@@ -127,22 +133,28 @@ public class Player extends Entity{
 		if(Keyboard.up && canMoveUp) {
 			playerY -= speed;
 			animateY = true;
-		} else if(Keyboard.down && canMoveDown){
-			playerY += speed;
-			animateY = true;
 		} else {
-			animateY = false;
+			animateY = true;
+		}
+		if(Keyboard.down && canMoveDown){
+			playerY += speed;
+			animateY2 = true;
+		} else {
+			animateY2 = false;
 		}
 		if(Keyboard.right && canMoveRight){
 			side = true;
 			animate = true;
 			playerX += speed;
-		} else if(Keyboard.left && canMoveLeft) {
-			side = false;
+		}else {
 			animate = true;
+		}	
+		if(Keyboard.left && canMoveLeft) {
+			side = false;
+			animateX = true;
 			playerX -= speed;
 		} else {
-			animate = false;
+			animateX = false;
 		}
 		
 		if(Keyboard.p){
@@ -160,9 +172,15 @@ public class Player extends Entity{
 			by = Math.sin(dir)*1;
 			bx = Math.cos(dir)*1;
 			//bullets.addBullet(playerX+(Game.Width/2-4), playerY+(Game.Height/2-4), bx, by);
-			manager.addEntity(new Bullet(playerX+(Game.Width/2-4), playerY+(Game.Height/2-4), bx, by, 4, 10));
+			manager.addEntity(new FireBullet(playerX+(Game.Width/2-4), playerY+(Game.Height/2-4), bx, by));
 			timer = fireRate;
 		}
+		
+		if (oldo == true && Keyboard.o == false){
+			
+		}
+		oldo = Keyboard.o;
+		
 		if(timer > 0)
 			timer--;
 		
@@ -177,11 +195,6 @@ public class Player extends Entity{
 	}
 	
 	public void entityRender(int delta, Render render){
-		
-		Font.Arial8White.renderFont(render, "HEALTH: " + PlayerProfile.profile.health, 0, 0);
-		Font.Arial8White.renderFont(render, "SCORE: " + PlayerProfile.profile.score, 0, 10);
-		
-		
 		leftAnim.render(this, Game.Width/2-8, Game.Height/2-8, delta, render);
 		rightAnim.render(this, Game.Width/2-8, Game.Height/2-8, delta, render);
 		
@@ -189,13 +202,24 @@ public class Player extends Entity{
 	public void entityCollide(int delta, Map map, EntityManager manager, Entity collided){
 		if (hitTimer <= 0){
 			if (collided instanceof Poo){
-				PlayerProfile.profile.health -= 5;
+				PlayerProfile.profile.health -= 1;
 				hitTimer += 60;
 			}
 			if (collided instanceof Spike){
-				PlayerProfile.profile.health -= 5;
+				PlayerProfile.profile.health -= 1;
 				hitTimer += 60;
 			}
+			if (collided instanceof Unicorn){
+				if (PlayerProfile.profile.health < 20){
+					PlayerProfile.profile.health += 1;
+					hitTimer += 60;
+				}
+			}
+			
+		}
+		if (collided instanceof Teleporter){
+			Teleporter tele = (Teleporter)collided;
+			Main.game.currentLevel.teleport(tele.id);//new Lobby();
 		}
 	}
 

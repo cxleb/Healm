@@ -16,6 +16,9 @@ public class MapFileReader {
 			BufferedReader reader = new BufferedReader(fr);
 			String line = "";
 			while((line = reader.readLine()) != null) {
+				if (!line.endsWith(",")){
+					line += ",";
+				}
                 contents += line;
             } 
 			reader.close();

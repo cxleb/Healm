@@ -12,17 +12,17 @@ public class Bullet extends Entity{
 	
 	public static final Spritesheet bulletSpriteSheet = new Spritesheet("res/spritesheets/bullet.png", 8);
 	public static final Sprite bullet_1 = new Sprite(bulletSpriteSheet, 8, 0, 0);
-
+	
 	public double dX;
 	public double dY;
 	private double xDir;
 	private double yDir;
 	public boolean isDead;
 	private double speed;
-	private int time = 600;
+	public int time = 600;
 	RenderComponent render;
 	
-	public Bullet(int x, int y, double xdir, double ydir, double speed, int dmg) {
+	public Bullet(int x, int y, double xdir, double ydir, double speed, int dmg, Sprite sprite) {
 		super(x, y);
 		this.dX = x;
 		this.dY = y;
@@ -30,7 +30,7 @@ public class Bullet extends Entity{
 		this.yDir = ydir;
 		this.speed = speed;
 		this.dmg = dmg;
-		render = new RenderComponent(bullet_1, true);
+		render = new RenderComponent(sprite, true);
 		
 		addComponent(render);
 	}

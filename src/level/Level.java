@@ -2,45 +2,41 @@ package level;
 
 import java.util.Random;
 
+import GUI.GUI;
 import entities.EntityManager;
 import entities.Player;
 import entities.lighting.LightMap;
-import entities.mobs.Poo;
-import entities.mobs.Unicorn;
 import entities.tile.Chest;
 import entities.tile.Spike;
+import entities.tile.Teleporter;
 import game.Game;
 import graphics.Render;
 import graphics.map.Map;
 
 public class Level {
 	
-	private Map map;
-	private LightMap lightMap;
+	public Map map;
+	public LightMap lightMap;
 	public Player player;
+	public GUI gui;
 	
-	EntityManager manager;
-	Random random;
+	public EntityManager manager;
+	public Random random;
 	int counter;
 	
-	public Level(String mapPath, String sheetPath, int sheetSize, int spriteSize){
+	public Level(){
 		
-		map = new Map(mapPath);
 		
+	}
+	
+	public void setupLevel(){
 		lightMap = new LightMap();
 		player = new Player(map.GetSpawnX() - (Game.Width/2-8), map.GetSpawnY() - (Game.Height/2-8), 16);
 		manager = new EntityManager();
 		random = new Random(System.currentTimeMillis());
+		gui = new GUI();
 		
 		manager.addEntity(player);
-		
-		for(int i = 0; i < 20; i++){
-			manager.addEntityRandomly(new Unicorn(0,0), map);
-		}
-		
-		for(int i = 0; i < 20; i++){
-			manager.addEntityRandomly(new Poo(0,0), map);
-		}
 		
 		for(int y = 0; y < map.Height; y++){
 			for(int x = 0; x < map.Width; x++){
@@ -59,11 +55,22 @@ public class Level {
 				}
 			}
 		}
+		
+		int id = 0;
+		for(int y = 0; y < map.Height; y++){
+			for(int x = 0; x < map.Width; x++){
+				int tileID = map.tiles[x + y * map.Width];
+				if(tileID == 45){
+					manager.addEntity(new Teleporter(x * 16, y * 16, id++));
+				}
+			}
+		}
 	}
 	
 	public void update(int delta){
 		//player.update(delta, map, manager);
 		manager.updateMobs(delta, map, manager);
+		gui.update(delta);
 	}
 	
 	public void render(Render render, int delta){
@@ -71,6 +78,15 @@ public class Level {
 		//player.render(delta, render);
 		lightMap.renderLightMap(render);
 		manager.renderMobs(delta, render);
+		gui.render(delta, render);
+	}
+	
+	protected void levelTeleport(int id){
+		
+	}
+	
+	public void teleport(int id){
+		levelTeleport(id);
 	}
 
 }

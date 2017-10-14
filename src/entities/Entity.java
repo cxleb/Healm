@@ -6,7 +6,6 @@ import java.util.List;
 import entities.components.EntityComponent;
 import graphics.Render;
 import graphics.map.Map;
-import graphics.sprites.MapedSpriteSheet;
 
 public class Entity{
 
@@ -14,7 +13,7 @@ public class Entity{
 	
 	protected int x = 0;
 	protected int y = 0;
-	protected int health = 1;
+	public int health = 1;
 	protected int dmg = 0;
 	protected boolean takeDmg = false;
 	

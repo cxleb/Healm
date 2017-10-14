@@ -54,8 +54,8 @@ public class Tile {
 			new Tile(MapedSpriteSheet.isheet.sprites[41], false),
 			new Tile(MapedSpriteSheet.isheet.sprites[42], true),
 			new Tile(MapedSpriteSheet.isheet.sprites[43], true),
-			new Tile(MapedSpriteSheet.isheet.sprites[44], false)
-			
+			new Tile(MapedSpriteSheet.isheet.sprites[44], false),
+			new Tile(MapedSpriteSheet.isheet.sprites[45], false)
 					
 	}; 
 	

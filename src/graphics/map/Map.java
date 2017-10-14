@@ -1,12 +1,11 @@
 package graphics.map;
 
-import java.util.Random;
-
 import graphics.Render;
 import graphics.sprites.Sprite;
 import graphics.sprites.Spritesheet;
 import graphics.tiles.Tile;
 import input.MapFileReader;
+import math.GenerateDungeon;
 
 public class Map {
 	
@@ -31,10 +30,11 @@ public class Map {
 	
 	
 	private void generateRandom() {
-		Random rand = new Random();
-		for(int i = 0; i < tiles.length; i++){
-			tiles[i] = rand.nextInt(3);
-		}
+		///Random rand = new Random();
+		///for(int i = 0; i < tiles.length; i++){
+		///	tiles[i] = rand.nextInt(3);
+		///}
+		GenerateDungeon.generateDungeon(this, 64, 8);
 	}
 	
 	private void generateMapFromFile(String filepath){

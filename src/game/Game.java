@@ -11,15 +11,16 @@ import graphics.Render;
 import graphics.Window;
 import input.Keyboard;
 import input.Mouse;
+import level.Dungeon;
 import level.Level;
 
 
 public class Game extends Canvas implements Runnable{
 	private static final long serialVersionUID = 1L;
 	
-	public static final int Width = 300; // 300
-	public static final int Height = 168; // 168
-	public static final int scale = 3;
+	public static final int Width = 530; // 300
+	public static final int Height = 300; // 168
+	public static final int scale = 2; // 3
 	
 	private boolean running = false;
 	
@@ -31,7 +32,7 @@ public class Game extends Canvas implements Runnable{
 	Keyboard keyboard;
 	Mouse mouse;
 	
-	Level currentLevel;
+	public Level currentLevel;
 	
 	BufferedImage image = new BufferedImage(Width, Height, BufferedImage.TYPE_INT_RGB);
 	private int[] pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
@@ -42,7 +43,7 @@ public class Game extends Canvas implements Runnable{
 		window = new Window(Width * scale, Height * scale, "This is the Title", this);
 		render = new Render(Width, Height);
 		
-		currentLevel = new Level("res/maps/dungeon1.csv", "res/spritesheets/i_spritesheet", 128, 16);
+		currentLevel = new Dungeon();//new Lobby();
 		
 		keyboard = new Keyboard();
 		mouse = new Mouse();
@@ -97,6 +98,8 @@ public class Game extends Canvas implements Runnable{
 		currentLevel.update(DeltaTime);
 		
 		render.setOffsets(currentLevel.player.playerX, currentLevel.player.playerY);
+		
+		
 		
 	}
 	
