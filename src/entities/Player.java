@@ -1,6 +1,5 @@
 package entities;
 
-import entities.bullets.FireBullet;
 import entities.components.AnimationComponent;
 import entities.mobs.Poo;
 import entities.mobs.Unicorn;
@@ -12,7 +11,6 @@ import graphics.map.Map;
 import graphics.sprites.Sprite;
 import graphics.sprites.Spritesheet;
 import input.Keyboard;
-import input.Mouse;
 import main.Main;
 
 public class Player extends Entity{
@@ -134,7 +132,7 @@ public class Player extends Entity{
 			playerY -= speed;
 			animateY = true;
 		} else {
-			animateY = true;
+			animateY = false;
 		}
 		if(Keyboard.down && canMoveDown){
 			playerY += speed;
@@ -147,7 +145,7 @@ public class Player extends Entity{
 			animate = true;
 			playerX += speed;
 		}else {
-			animate = true;
+			animate = false;
 		}	
 		if(Keyboard.left && canMoveLeft) {
 			side = false;
@@ -165,16 +163,16 @@ public class Player extends Entity{
 		
 		
 		// shooting
-		if(Mouse.clicked && timer <= 0){
-			double bx = Mouse.x - Game.Width/2;
-			double by = Mouse.y - Game.Height/2;
-			double dir = Math.atan2(by, bx);
-			by = Math.sin(dir)*1;
-			bx = Math.cos(dir)*1;
-			//bullets.addBullet(playerX+(Game.Width/2-4), playerY+(Game.Height/2-4), bx, by);
-			manager.addEntity(new FireBullet(playerX+(Game.Width/2-4), playerY+(Game.Height/2-4), bx, by));
-			timer = fireRate;
-		}
+		//if(Mouse.leftClicked && timer <= 0){
+		//	double bx = Mouse.x - Game.Width/2;
+		//	double by = Mouse.y - Game.Height/2;
+		//	double dir = Math.atan2(by, bx);
+		//	by = Math.sin(dir)*1;
+		//	bx = Math.cos(dir)*1;
+		//	//bullets.addBullet(playerX+(Game.Width/2-4), playerY+(Game.Height/2-4), bx, by);
+		//	manager.addEntity(new FireBullet(playerX+(Game.Width/2-4), playerY+(Game.Height/2-4), bx, by));
+		//	timer = fireRate;
+		//}
 		
 		if (oldo == true && Keyboard.o == false){
 			

@@ -2,7 +2,6 @@ package entities.items;
 
 import entities.Entity;
 import entities.EntityManager;
-import entities.Player;
 import entities.PlayerProfile;
 import entities.components.RenderComponent;
 import graphics.map.Map;

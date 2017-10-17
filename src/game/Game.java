@@ -11,8 +11,8 @@ import graphics.Render;
 import graphics.Window;
 import input.Keyboard;
 import input.Mouse;
-import level.Dungeon;
 import level.Level;
+import level.Lobby;
 
 
 public class Game extends Canvas implements Runnable{
@@ -43,7 +43,7 @@ public class Game extends Canvas implements Runnable{
 		window = new Window(Width * scale, Height * scale, "This is the Title", this);
 		render = new Render(Width, Height);
 		
-		currentLevel = new Dungeon();//new Lobby();
+		currentLevel = new Lobby();
 		
 		keyboard = new Keyboard();
 		mouse = new Mouse();

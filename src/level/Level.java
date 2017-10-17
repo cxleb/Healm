@@ -70,7 +70,7 @@ public class Level {
 	public void update(int delta){
 		//player.update(delta, map, manager);
 		manager.updateMobs(delta, map, manager);
-		gui.update(delta);
+		gui.update(delta, manager);
 	}
 	
 	public void render(Render render, int delta){

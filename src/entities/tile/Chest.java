@@ -6,7 +6,9 @@ import entities.PlayerProfile;
 import entities.bullets.Bullet;
 import entities.items.ItemHolder;
 import graphics.map.Map;
-import items.HealthPotion;
+import items.Item;
+import items.ItemGenerator;
+import items.items.HealthPotion;
 
 public class Chest extends Entity{
 
@@ -32,7 +34,7 @@ public class Chest extends Entity{
 				PlayerProfile.profile.xp += 50;
 			}
 			
-			manager.addEntity(new ItemHolder(x, y, new HealthPotion()));
+			manager.addEntity(new ItemHolder(x, y, ItemGenerator.generateRandomItem()));
 			opened = true;
 		}
 	}

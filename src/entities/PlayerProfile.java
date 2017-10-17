@@ -1,9 +1,6 @@
 package entities;
 
-import java.util.ArrayList;
-
 import items.Inventory;
-import items.Item;
 
 public class PlayerProfile {
 	

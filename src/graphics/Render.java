@@ -43,8 +43,7 @@ public class Render {
 
     private void renderSpriteInternal(Sprite sprite, int xp, int yp, boolean checkForTransparency) {
     	// Quickly check if the sprite is visible at all
-        if (isBetween(xp, -sprite.SIZE + 1, screen.Width - 1)
-                && isBetween(yp, -sprite.SIZE + 1, screen.Height - 1)) {
+        if (isBetween(xp, -sprite.SIZE + 1, screen.Width - 1) && isBetween(yp, -sprite.SIZE + 1, screen.Height - 1)) {
             for (int y = Math.max(0, -yp); y < Math.min(sprite.SIZE, screen.Height - yp); y++) {
                 int ya = yp + y;
                 if (checkForTransparency) {
@@ -59,9 +58,7 @@ public class Render {
                     // Copy the entire visible row from source (sprite) to destination using System.arraycopy
                     int sourceStartX = Math.max(0, -xp);
                     int sourceEndX = Math.min(sprite.SIZE, screen.Width - xp);
-                    System.arraycopy(
-                            sprite.pixels, sourceStartX + y * sprite.SIZE,
-                            screen.pixels, xp + sourceStartX + ya * screen.Width, sourceEndX - sourceStartX);
+                    System.arraycopy( sprite.pixels, sourceStartX + y * sprite.SIZE, screen.pixels, xp + sourceStartX + ya * screen.Width, sourceEndX - sourceStartX);
                 }
             }
         }

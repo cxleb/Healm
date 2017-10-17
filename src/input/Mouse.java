@@ -10,7 +10,8 @@ public class Mouse implements MouseListener, MouseMotionListener{
 	
 	public static int x = 0;
 	public static int y = 0;
-	public static boolean clicked = false;
+	public static boolean leftClicked = false;
+	public static boolean rightClicked = false;
 
 	public void mouseClicked(MouseEvent arg0) {
 	}
@@ -22,13 +23,15 @@ public class Mouse implements MouseListener, MouseMotionListener{
 	}
 
 	public void mousePressed(MouseEvent arg0) {
-		clicked = true;
+		if(arg0.getButton() == MouseEvent.BUTTON1) leftClicked = true;
+		if(arg0.getButton() == MouseEvent.BUTTON3) rightClicked = true;
 		x = arg0.getX()/Game.scale;
 		y = arg0.getY()/Game.scale;
 	}
 
 	public void mouseReleased(MouseEvent arg0) {
-		clicked = false;
+		if(arg0.getButton() == MouseEvent.BUTTON1) leftClicked = false;
+		if(arg0.getButton() == MouseEvent.BUTTON3) rightClicked = false;
 	}
 
 	public void mouseDragged(MouseEvent arg0) {

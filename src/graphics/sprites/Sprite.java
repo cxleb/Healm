@@ -14,6 +14,11 @@ public class Sprite {
 		load(sheet);
 	}
 	
+	public Sprite(int size){
+		SIZE = size;
+		pixels = new int[SIZE * SIZE];
+	}
+	
 	private void load(Spritesheet sheet){
 		for(int y = 0; y < SIZE; y++){
 			for(int x = 0; x < SIZE; x++){
@@ -21,6 +26,18 @@ public class Sprite {
 				pixels[x + y * SIZE] = sheet.pixels[(this.x + x) + (this.y + y) * sheet.SIZE];
 			}
 		}
+	}
+	
+	public static Sprite rescale(Sprite sprite, int scale){
+		Sprite scaled = new Sprite(sprite.SIZE*scale);
+		
+		for(int y = 0; y < scaled.SIZE; y++){
+			for(int x = 0; x < scaled.SIZE; x++){
+				scaled.pixels[x + y * scaled.SIZE] = sprite.pixels[(x/scale) + (y/scale) * sprite.SIZE];
+			}
+		}
+		
+		return scaled;
 	}
 
 }
